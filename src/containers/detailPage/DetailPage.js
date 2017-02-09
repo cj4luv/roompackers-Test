@@ -69,24 +69,20 @@ class DetailPage extends Component {
   }
 
   //redux로 값이 변한 props 값으로
-  shouldComponentUpdate() {
-    if(this.props.modalVisible === false) {
-      return true;
-    }
-    if (this.props.modalVisible === true) {
-      if(setTimeout(()=>{this.props.changeModalSwich(false), 3500}))
-        return true;
-    }
-
-  }
+  // shouldComponentUpdate() {
+  //   if(this.props.modalVisible === false) {
+  //     return true;
+  //   }
+  //   if (this.props.modalVisible === true) {
+  //     if(setTimeout(()=>{this.props.changeModalSwich(false), 3500}))
+  //       return true;
+  //   }
+  //
+  // }
 
   componentWillMount(){
     Actions.refresh({title: this.props.title});
     this._setDataFromFetching(this.props.data);
-  }
-
-  _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   }
 
   _setDataFromFetching(data){
@@ -251,6 +247,7 @@ class DetailPage extends Component {
     var list = [];
     if(this.state.currentCtg == 0 ){
       this.state.mainList.map((data, i) =>{
+        console.log(data.url);
         list.push(
           <Image key={i} style={styles.slide} source={{url: data.url}}/>
         );
@@ -335,27 +332,27 @@ class DetailPage extends Component {
   }
 
   //푸시 모달 애니메이션
-  _setModalTimer() {
-    if(this.props.modalVisible === true ) {
-      setTimeout(()=>{this.setState({modalAnimation:false})}, 2000);
-    }
-  }
+  // _setModalTimer() {
+  //   if(this.props.modalVisible === true ) {
+  //     setTimeout(()=>{this.setState({modalAnimation:false})}, 2000);
+  //   }
+  // }
 
 /*=========================================================================================================
                                 Render Part
 =========================================================================================================*/
   //모달 알림 역활 부분 this.state.modalVisible animationType={'fade'}
-  _renderModal() {
-     return(
-       <Modal transparent={true} visible={this.props.modalVisible} >
-         <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
-         <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
-           onAnimationEnd={()=>{this._setModalTimer()}} >
-           <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
-         </Animatable.View>
-       </Modal>
-     );
-  }
+  // _renderModal() {
+  //    return(
+  //      <Modal transparent={true} visible={this.props.modalVisible} >
+  //        <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
+  //        <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
+  //          onAnimationEnd={()=>{this._setModalTimer()}} >
+  //          <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
+  //        </Animatable.View>
+  //      </Modal>
+  //    );
+  // }
 
   //랜더 탭버튼
   _renderTabs() {
@@ -380,6 +377,7 @@ class DetailPage extends Component {
           nextButton={<Image source={require('../../../public/img/right.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}
           prevButton={<Image source={require('../../../public/img/left.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}>
           {this._getSwipeImageList()}
+
         </Swiper>
 
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -546,7 +544,7 @@ class DetailPage extends Component {
             {this._renderConstructionInfo()}
             {this._renderPriceTableArea()}
             {this._renderButtonArea()}
-            {this._renderModal()}
+            {/* {this._renderModal()} */}
           </View>
         </View>
       </ScrollView>
@@ -799,13 +797,13 @@ const styles = StyleSheet.create({
   }
 });
 
-//module.exports = DetailPage;
+module.exports = DetailPage;
 
-export default connect(
-  (state) => ({
-    modalVisible: state.app.modalVisible,
-  }),
-  (dispatch)=>({
-   changeModalSwich:(visible) => dispatch(actions.changeModalSwich(visible)),
-  })
-)(DetailPage)
+// export default connect(
+//   (state) => ({
+//     modalVisible: state.app.modalVisible,
+//   }),
+//   (dispatch)=>({
+//    changeModalSwich:(visible) => dispatch(actions.changeModalSwich(visible)),
+//   })
+// )(DetailPage)
