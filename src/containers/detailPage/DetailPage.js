@@ -247,16 +247,16 @@ class DetailPage extends Component {
     var list = [];
     if(this.state.currentCtg == 0 ){
       this.state.mainList.map((data, i) =>{
-        console.log(data.url);
+        console.log(data.url)
         list.push(
-          <Image key={i} style={styles.slide} source={{url: data.url}}/>
+          <Image key={i} style={styles.slide} source={{uri: data.url}} />
         );
       });
     }else{
       this.state.mainList.filter((data)=> {return (data.ctg == this.state.currentCtg)})
       .map((data, i) =>{
         list.push(
-          <Image key={i} style={styles.slide} source={{url: data.url}}/>
+          <Image key={i} style={styles.slide} source={{uri: data.url}} />
         );
       });
     }
@@ -283,7 +283,7 @@ class DetailPage extends Component {
         list.push(
           <View key={i}>
             <Button onPress={()=>{this.setState({indexNum: i, isThumb: true})}}>
-              <Image style={styles.thumnail} source={{url: data.url}}>
+              <Image style={styles.thumnail} source={{uri: data.url}}>
                 {this._renderLayer(i)}
               </Image>
             </Button>
@@ -296,7 +296,7 @@ class DetailPage extends Component {
         list.push(
           <View key={i}>
             <Button onPress={()=>{this.setState({indexNum: i, isThumb: true})}}>
-              <Image style={styles.thumnail} source={{url: data.url}} >
+              <Image style={styles.thumnail} source={{uri: data.url}} >
                 {this._renderLayer(i)}
               </Image>
             </Button>
@@ -377,11 +377,12 @@ class DetailPage extends Component {
           nextButton={<Image source={require('../../../public/img/right.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}
           prevButton={<Image source={require('../../../public/img/left.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}>
           {this._getSwipeImageList()}
-
+          {/* <Image style={styles.slide} source={{uri: 'http://www.roompackers.com/img/react/mid_m/1/1/mid_1_1_1_1.jpg'}} /> */}
         </Swiper>
 
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {this._getThumbnailImageList()}
+          {/* <Image style={styles.thumnail} source={{uri: 'http://www.roompackers.com/img/react/mid_m/1/1/mid_1_1_1_1.jpg'}} /> */}
         </ScrollView>
       </View>
     );
@@ -395,7 +396,7 @@ class DetailPage extends Component {
             this._moveToInterioristPage();
           }}>
             <View style={styles.circlePhotoArea}>
-              <Image source={{url: this.state.imgData.pvPath}} style={styles.circlePhoto}></Image>
+              <Image source={{uri: this.state.imgData.pvPath}} style={styles.circlePhoto}></Image>
             </View>
           </Button>
         </View>
