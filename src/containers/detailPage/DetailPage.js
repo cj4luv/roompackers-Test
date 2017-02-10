@@ -36,7 +36,7 @@ import * as Animatable from 'react-native-animatable';
 class DetailPage extends Component {
   //상담 완료시 버튼 비활성  부분
   static defaultProps = {
-
+    
     //버든 기능 온오프 및 버튼 스타일 변형
     isCounselBtn: false,
     isOpacity: true,
