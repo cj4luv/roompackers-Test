@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   TextInput,
-  AlertIOS,
   PickerIOS,
   TouchableOpacity,
   KeyboardAvoidingView,

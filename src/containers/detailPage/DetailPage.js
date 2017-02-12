@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
-  ActivityIndicator,
-  AlertIOS,
   Dimensions,
   Image,
   View,
@@ -34,9 +32,14 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import * as Animatable from 'react-native-animatable';
 
 class DetailPage extends Component {
+
+  static propTypes = {
+    isCounselBtn:PropTypes.bool,
+    isOpacity:PropTypes.bool
+  }
+
   //상담 완료시 버튼 비활성  부분
   static defaultProps = {
-    
     //버든 기능 온오프 및 버튼 스타일 변형
     isCounselBtn: false,
     isOpacity: true,
@@ -69,16 +72,16 @@ class DetailPage extends Component {
   }
 
   //redux로 값이 변한 props 값으로
-  // shouldComponentUpdate() {
-  //   if(this.props.modalVisible === false) {
-  //     return true;
-  //   }
-  //   if (this.props.modalVisible === true) {
-  //     if(setTimeout(()=>{this.props.changeModalSwich(false), 3500}))
-  //       return true;
-  //   }
-  //
-  // }
+  shouldComponentUpdate() {
+    if(this.props.modalVisible === false) {
+      return true;
+    }
+    if (this.props.modalVisible === true) {
+      if(setTimeout(()=>{this.props.changeModalSwich(false), 3500}))
+        return true;
+    }
+
+  }
 
   componentWillMount(){
     Actions.refresh({title: this.props.title});
@@ -332,27 +335,27 @@ class DetailPage extends Component {
   }
 
   //푸시 모달 애니메이션
-  // _setModalTimer() {
-  //   if(this.props.modalVisible === true ) {
-  //     setTimeout(()=>{this.setState({modalAnimation:false})}, 2000);
-  //   }
-  // }
+  _setModalTimer() {
+    if(this.props.modalVisible === true ) {
+      setTimeout(()=>{this.setState({modalAnimation:false})}, 2000);
+    }
+  }
 
 /*=========================================================================================================
                                 Render Part
 =========================================================================================================*/
   //모달 알림 역활 부분 this.state.modalVisible animationType={'fade'}
-  // _renderModal() {
-  //    return(
-  //      <Modal transparent={true} visible={this.props.modalVisible} >
-  //        <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
-  //        <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
-  //          onAnimationEnd={()=>{this._setModalTimer()}} >
-  //          <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
-  //        </Animatable.View>
-  //      </Modal>
-  //    );
-  // }
+  _renderModal() {
+     return(
+       <Modal transparent={true} visible={this.props.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}} >
+         <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
+         <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
+           onAnimationEnd={()=>{this._setModalTimer()}} >
+           <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
+         </Animatable.View>
+       </Modal>
+     );
+  }
 
   //랜더 탭버튼
   _renderTabs() {
@@ -545,7 +548,7 @@ class DetailPage extends Component {
             {this._renderConstructionInfo()}
             {this._renderPriceTableArea()}
             {this._renderButtonArea()}
-            {/* {this._renderModal()} */}
+            {this._renderModal()}
           </View>
         </View>
       </ScrollView>
@@ -798,13 +801,13 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = DetailPage;
+// module.exports = DetailPage;
 
-// export default connect(
-//   (state) => ({
-//     modalVisible: state.app.modalVisible,
-//   }),
-//   (dispatch)=>({
-//    changeModalSwich:(visible) => dispatch(actions.changeModalSwich(visible)),
-//   })
-// )(DetailPage)
+export default connect(
+  (state) => ({
+    modalVisible: state.app.modalVisible,
+  }),
+  (dispatch)=>({
+   changeModalSwich:(visible) => dispatch(actions.changeModalSwich(visible)),
+  })
+)(DetailPage)
