@@ -7,7 +7,8 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text,
+  Platform
 } from 'react-native';
 
 //화면 크기 얻기
@@ -15,6 +16,10 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 //화면 크기에 따른 1픽셀 비율
 const PIXEL = WINDOW_WIDTH / 375;
+
+import PickerAndroid from './PickerAndroid';
+
+let Picker = Platform.OS === 'ios' ? PickerIOS : PickerAndroid;
 
 class PickerModal extends Component {
   constructor(props){
@@ -32,7 +37,7 @@ class PickerModal extends Component {
     var list = [];
     //PickerIOS에 넣을 리스트 생성
     this.state.itemList.map((data, key)=>{
-      list.push(<PickerIOS.Item key={key} label={data} value={key}/>);
+      list.push(<Picker.Item key={key} label={data} value={key}/>);
     })
     this.setState({
       pickerList: list,
@@ -60,7 +65,8 @@ class PickerModal extends Component {
             }} underlayColor='#fff'>
               <Text style={styles.doneBtnText}>Done</Text>
             </TouchableHighlight>
-            <PickerIOS
+            <Picker
+              key={this.state.index}
               selectedValue={this.state.index}
               onValueChange={(value)=>{
                 //피커 index값 저장
@@ -70,7 +76,7 @@ class PickerModal extends Component {
               }}
             >
               {this.state.pickerList}
-            </PickerIOS>
+            </Picker>
           </View>
         </Modal>
     );
@@ -93,7 +99,6 @@ const styles = StyleSheet.create({
     height: PIXEL * 40,
     alignItems:'flex-end',
     paddingRight:PIXEL * 15,
-    borderBottomWidth: PIXEL * 2,
     borderBottomColor:'#efeff4',
     backgroundColor: 'transparent',
     justifyContent: 'center',

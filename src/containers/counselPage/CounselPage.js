@@ -23,7 +23,7 @@ const PIXEL_Y = WINDOW_HEIGHT/667;
 import CheckButton from '../../components/buttons/CheckButton';
 import Button from '../../components/buttons/Button';
 
-// import PickerModal from './PickerModal';
+import PickerModal from './PickerModal';
 
 //정규식 변수 한글만 검사, 주소검사, 숫자만 검사, 연락처검사
 const hangulValidChecked = /^[가-힣]{2,16}$/;
@@ -185,27 +185,27 @@ class CounselPage extends Component {
     }
   }
 
-  // //모달 온오프 스위치
-  // _sethomeTypeVisible(visible) {
-  //   this.setState({homeTypeVisible: visible});
-  // }
-  // _setroomTypeVisible(visible) {
-  //   this.setState({roomTypeVisible: visible});
-  // }
-  //
-  // //피커 값 전달
-  // _sethomeTypeValue(value){
-  //   this.setState({
-  //     homeTypeNum: value,
-  //     homeType: this.homeType[value]
-  //   });
-  // }
-  // _setroomTypeValue(value) {
-  //   this.setState({
-  //     roomTypeNum: value,
-  //     roomType: this.roomType[value]
-  //   });
-  // }
+  //모달 온오프 스위치
+  _sethomeTypeVisible(visible) {
+    this.setState({homeTypeVisible: visible});
+  }
+  _setroomTypeVisible(visible) {
+    this.setState({roomTypeVisible: visible});
+  }
+
+  //피커 값 전달
+  _sethomeTypeValue(value){
+    this.setState({
+      homeTypeNum: value,
+      homeType: this.homeType[value]
+    });
+  }
+  _setroomTypeValue(value) {
+    this.setState({
+      roomTypeNum: value,
+      roomType: this.roomType[value]
+    });
+  }
 
   //상담 버튼 터치 후 푸쉬 알람(미구현)
   _checkCustmerInfo() {
@@ -290,14 +290,14 @@ class CounselPage extends Component {
         <View style={styles.custemerInfo}>
           <Text style={styles.category}>건물유형</Text>
           <TouchableOpacity style={styles.pickerBtnsize}
-            // onPress={() => {
-            //   this._sethomeTypeVisible(true);
-            //   if(this.state.checked === true ) {
-            //     this._changeCounselBtnColor();
-            //   }
-            //   //TextInput 객체에서 done버튼을 종료하지 않고 바로 피커 실행시 TextInput Value값이 유효한지 검사
-            //   this._whenTouchModalCheckedValidation();
-            //   this._checkhomeTypeValidation();}}
+            onPress={() => {
+              this._sethomeTypeVisible(true);
+              if(this.state.checked === true ) {
+                this._changeCounselBtnColor();
+              }
+              //TextInput 객체에서 done버튼을 종료하지 않고 바로 피커 실행시 TextInput Value값이 유효한지 검사
+              this._whenTouchModalCheckedValidation();
+              this._checkhomeTypeValidation();}}
             >
             <TextInput style={styles.textInput} editable={false}
               onChangeText={(text) => this.setState({homeType: text})}
@@ -337,13 +337,13 @@ class CounselPage extends Component {
         <View style={styles.custemerInfo}>
           <Text style={styles.category}>의뢰분야</Text>
           <TouchableOpacity style={styles.pickerBtnsize}
-            // onPress={() => {
-            //   this._setroomTypeVisible(true);
-            //   if(this.state.checked === true ) {
-            //     this._changeCounselBtnColor();
-            //   }
-            //   this._whenTouchModalCheckedValidation();
-            //   this._checkroomTypeValidation();}}
+            onPress={() => {
+              this._setroomTypeVisible(true);
+              if(this.state.checked === true ) {
+                this._changeCounselBtnColor();
+              }
+              this._whenTouchModalCheckedValidation();
+              this._checkroomTypeValidation();}}
             >
             <TextInput style={styles.textInput} editable={false}
               onChangeText={(text) => this.setState({roomType: text})}
@@ -370,25 +370,25 @@ class CounselPage extends Component {
     );
   }
 
-  // //피커 랜더 부분
-  // _rederModalPicker() {
-  //   return(
-  //     <View>
-  //       <PickerModal
-  //          item={this.homeType}
-  //          modalVisible={this.state.homeTypeVisible}
-  //          setValue={this._sethomeTypeValue.bind(this)}
-  //          setModalVisible={this._sethomeTypeVisible.bind(this)}
-  //        />
-  //        <PickerModal
-  //          item={this.roomType}
-  //          modalVisible={this.state.roomTypeVisible}
-  //          setValue={this._setroomTypeValue.bind(this)}
-  //          setModalVisible={this._setroomTypeVisible.bind(this)}
-  //        />
-  //     </View>
-  //   );
-  // }
+  //피커 랜더 부분
+  _rederModalPicker() {
+    return(
+      <View>
+        <PickerModal
+           item={this.homeType}
+           modalVisible={this.state.homeTypeVisible}
+           setValue={this._sethomeTypeValue.bind(this)}
+           setModalVisible={this._sethomeTypeVisible.bind(this)}
+         />
+         <PickerModal
+           item={this.roomType}
+           modalVisible={this.state.roomTypeVisible}
+           setValue={this._setroomTypeValue.bind(this)}
+           setModalVisible={this._setroomTypeVisible.bind(this)}
+         />
+      </View>
+    );
+  }
 
   /* 작품 정보 영역 */
   _renderPostInfo() {
@@ -435,7 +435,7 @@ class CounselPage extends Component {
         { /* KeyboardAvoidingView는 키패드 생성시 하위 객체들이 키패드 만큼 y축으로 이동 */ }
         <KeyboardAvoidingView behavior='position'>
           <TouchableOpacity  onPress={()=>{Keyboard.dismiss()}} activeOpacity={1} >
-          {/* {this._rederModalPicker()} */}
+          {this._rederModalPicker()}
           <View style={styles.subView}>
             { /* 작품 정보 영역 */
               this._renderPostInfo() }

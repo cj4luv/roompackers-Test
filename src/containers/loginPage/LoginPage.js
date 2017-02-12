@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  AlertIOS,
   Dimensions
 } from 'react-native';
 
@@ -55,7 +54,7 @@ class LoginPage extends Component {
               auth.signInWithCredential(credential).then((result) => {
                 //로그인 성공 시
                 //result{diplayName, uid, email, photoURL}
-                if(loginToken.createUserToken(result.displayName, result.uid)) 
+                if(loginToken.createUserToken(result.displayName, result.uid))
                 Actions.searchPage();
 
               }).catch((error) => {
