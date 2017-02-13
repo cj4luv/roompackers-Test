@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   Dimensions,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 
 import Button from '../../components/buttons/Button';
@@ -86,7 +87,6 @@ class LoginPage extends Component {
   renderNotLogged(){
     return(
       <Image style={styles.container} source={require('../../../public/img/loading@2x.jpg')}>
-        <StatusBar hidden={true}></StatusBar>
         <View style={styles.layer}>
           <View style={styles.productArea}>
             <Text style={styles.corporate}></Text>
@@ -116,11 +116,17 @@ class LoginPage extends Component {
     );
   }
 
-  // componentWillMount() {
-  //   if(loginToken.getUser()){
-  //     Actions.searchPage();
-  //   }
-  // }
+  componentWillMount() {
+    // if(loginToken.getUser()){
+    //   Actions.searchPage();
+    // }
+    if(Platform.OS === 'android') {
+      StatusBar.setHidden(true)
+    } else {
+      StatusBar.setHidden(false)
+    }
+
+  }
 
   render(){
     return this.renderNotLogged();

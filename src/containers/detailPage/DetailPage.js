@@ -539,7 +539,7 @@ class DetailPage extends Component {
   render() {
     return(
       <ScrollView style={styles.detailScrollView}>
-        <StatusBar hidden={true}></StatusBar>
+        {/* <StatusBar hidden={true}></StatusBar> */}
         {this._renderTabs()}
         {this._renderTopSwiper()}
         <View style={styles.mainSubject}>

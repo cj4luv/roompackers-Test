@@ -155,14 +155,14 @@ class SearchPage extends Component {
     if(this.state.dataLoaded){
       return (
         <View>
-          <StatusBar hidden={true}></StatusBar>
+          {/* <StatusBar hidden={true}></StatusBar> */}
           {this._renderLoaded()}
         </View>
       )
     }else{
       return(
         <View>
-          <StatusBar hidden={true}></StatusBar>
+          {/* <StatusBar hidden={true}></StatusBar> */}
           {this._renderHeader()}
         </View>
       );
