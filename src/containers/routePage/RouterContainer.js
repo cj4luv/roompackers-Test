@@ -16,7 +16,7 @@ import {
 
 import { connect } from 'react-redux';
 
-// import LoginPage from '../loginPage/LoginPage';
+import LoginPage from '../loginPage/LoginPage';
 import SearchPage from '../searchPage/SearchPage';
 
 import DetailPage from '../detailPage/DetailPage';
@@ -41,8 +41,8 @@ class RouterContainer extends Component {
     return (
       <Router>
         {/* <Scene key="TestPage" component={TestPage}  hideNavBar hideTabBar /> */}
-        {/* <Scene key="loginPage" component={LoginPage}  hideNavBar hideTabBar /> */}
-        <Scene key="searchPage" component={SearchPage} hideNavBar hideTabBar type='replace' initial/>
+        <Scene key="loginPage" component={LoginPage}  hideNavBar hideTabBar initial/>
+        <Scene key="searchPage" component={SearchPage} hideNavBar hideTabBar type='replace' />
         <Scene key="detailPage" component={DetailPage} title={this.props.pfTitle} titleStyle={styles.title}
           getSceneStyle={getSceneStyle}  navigationBarStyle={styles.navigationBarStyle}
           leftButtonIconStyle={styles.leftButtonIconStyle} hideNavBar={false}

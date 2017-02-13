@@ -4,21 +4,22 @@ import {
   Image,
   StyleSheet,
   Text,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
 
 import Button from '../../components/buttons/Button';
 
-import FBSDK, { LoginManager, AccessToken} from 'react-native-fbsdk';
-
-import * as firebase from 'firebase';
-import Config from './constants';
-
-const firebaseApp = firebase.initializeApp(Config.cfg_firebase_roompackers);
-const auth = firebaseApp.auth();
-
-import LoginToken from './LoginToken';
-const loginToken = new LoginToken;
+// import FBSDK, { LoginManager, AccessToken} from 'react-native-fbsdk';
+//
+// import * as firebase from 'firebase';
+// import Config from './constants';
+//
+// const firebaseApp = firebase.initializeApp(Config.cfg_firebase_roompackers);
+// const auth = firebaseApp.auth();
+//
+// import LoginToken from './LoginToken';
+// const loginToken = new LoginToken;
 
 import { Actions } from 'react-native-router-flux';
 
@@ -35,56 +36,57 @@ class LoginPage extends Component {
 
   }
 
-  //페이스북 연동 로그인
-  _fbLogin() {
-    //페이스북 SDK Login Manager 요청 할 권한과 함께 호출
-    LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
-      (result) => {
-        if(result.isCancelled) {
-        } else {
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
-              //console.log("AccessToken: " + data.accessToken.toString());
-              //페이스북 토큰
-              let accessToken = data.accessToken.toString();
-              //파이베이스와 페이스북 연동 관찰자 선언
-              let credential = firebase.auth.FacebookAuthProvider.credential(accessToken);
-
-              //페이스북 엑세스토큰으로 인증 과정 부분
-              auth.signInWithCredential(credential).then((result) => {
-                //로그인 성공 시
-                //result{diplayName, uid, email, photoURL}
-                if(loginToken.createUserToken(result.displayName, result.uid))
-                Actions.searchPage();
-
-              }).catch((error) => {
-                let errorCode = error.code;
-                let errorMessage = error.message;
-
-                let email = error.email;
-
-                let credential = error.credential;
-                if (errorCode === 'auth/account-exists-with-different-credential') {
-                  alert('You have already signed up with a different auth provider for that email.');
-                  // If you are using multiple auth providers on your app you should handle linking
-                  // the user's accounts here.
-                } else {
-                  console.error(error);
-                }
-              });
-            }
-          ).catch((error) => this.onError && this.onError(error));
-        }
-      },
-      (error) => {
-        console.log('Login failed with error ' + error);
-      }
-    );
-  }
+  // //페이스북 연동 로그인
+  // _fbLogin() {
+  //   //페이스북 SDK Login Manager 요청 할 권한과 함께 호출
+  //   LoginManager.logInWithReadPermissions(['public_profile', 'email']).then(
+  //     (result) => {
+  //       if(result.isCancelled) {
+  //       } else {
+  //         AccessToken.getCurrentAccessToken().then(
+  //           (data) => {
+  //             //console.log("AccessToken: " + data.accessToken.toString());
+  //             //페이스북 토큰
+  //             let accessToken = data.accessToken.toString();
+  //             //파이베이스와 페이스북 연동 관찰자 선언
+  //             let credential = firebase.auth.FacebookAuthProvider.credential(accessToken);
+  //
+  //             //페이스북 엑세스토큰으로 인증 과정 부분
+  //             auth.signInWithCredential(credential).then((result) => {
+  //               //로그인 성공 시
+  //               //result{diplayName, uid, email, photoURL}
+  //               if(loginToken.createUserToken(result.displayName, result.uid))
+  //               Actions.searchPage();
+  //
+  //             }).catch((error) => {
+  //               let errorCode = error.code;
+  //               let errorMessage = error.message;
+  //
+  //               let email = error.email;
+  //
+  //               let credential = error.credential;
+  //               if (errorCode === 'auth/account-exists-with-different-credential') {
+  //                 alert('You have already signed up with a different auth provider for that email.');
+  //                 // If you are using multiple auth providers on your app you should handle linking
+  //                 // the user's accounts here.
+  //               } else {
+  //                 console.error(error);
+  //               }
+  //             });
+  //           }
+  //         ).catch((error) => this.onError && this.onError(error));
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log('Login failed with error ' + error);
+  //     }
+  //   );
+  // }
 
   renderNotLogged(){
     return(
       <Image style={styles.container} source={require('../../../public/img/loading@2x.jpg')}>
+        <StatusBar hidden={true}></StatusBar>
         <View style={styles.layer}>
           <View style={styles.productArea}>
             <Text style={styles.corporate}></Text>
@@ -94,7 +96,7 @@ class LoginPage extends Component {
             <View style={styles.fbView}>
               <Button style={styles.fbBtn}
                 onPress={() => {
-                  this._fbLogin()
+                  // this._fbLogin()
                 }}>
                 페이스북으로 로그인
                 <View style={styles.arrow}></View>
@@ -114,11 +116,11 @@ class LoginPage extends Component {
     );
   }
 
-  componentWillMount() {
-    if(loginToken.getUser()){
-      Actions.searchPage();
-    }
-  }
+  // componentWillMount() {
+  //   if(loginToken.getUser()){
+  //     Actions.searchPage();
+  //   }
+  // }
 
   render(){
     return this.renderNotLogged();

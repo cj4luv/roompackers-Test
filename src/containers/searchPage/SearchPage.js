@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   View,
   ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 
 import {
@@ -152,11 +153,17 @@ class SearchPage extends Component {
   //로딩화면 추후 교체
   render() {
     if(this.state.dataLoaded){
-      return this._renderLoaded();
+      return (
+        <View>
+          <StatusBar hidden={true}></StatusBar>
+          {this._renderLoaded()}
+        </View>
+      )
     }else{
       return(
         <View>
-        {this._renderHeader()}
+          <StatusBar hidden={true}></StatusBar>
+          {this._renderHeader()}
         </View>
       );
     }

@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Platform
+  Platform,
 } from 'react-native';
 
 //화면 크기 얻기

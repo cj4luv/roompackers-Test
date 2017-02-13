@@ -8,7 +8,7 @@ import {
 	Image,
 	Dimensions,
 	PixelRatio,
-	PanResponder
+	PanResponder,
 } from 'react-native';
 
 class PickerAndroidItem extends Component{
@@ -230,7 +230,6 @@ export default class PickerAndroid extends Component{
 		return (
 			//total to be 90*2+40=220 height
 			<View style={[styles.container, this.state.pickerStyle]} {...this._panResponder.panHandlers}>
-
 				<View style={styles.up}>
 					<View style={[styles.upView, upViewStyle]} ref={(up) => { this.up = up }} >
 						{ items.upItems }
@@ -248,7 +247,6 @@ export default class PickerAndroid extends Component{
 						{ items.downItems }
 					</View>
 				</View>
-
 			</View>
 		);
 	}
