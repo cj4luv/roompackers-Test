@@ -5,10 +5,10 @@ import {
   Text,
   Dimensions,
   TextInput,
-  PickerIOS,
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
+  Platform
 } from 'react-native';
 
 import Util from '../../components/functions/Util';
@@ -298,7 +298,9 @@ class CounselPage extends Component {
               this._whenTouchModalCheckedValidation();
               this._checkhomeTypeValidation();}}
             >
-            <TextInput style={styles.textInput} editable={false}
+            <TextInput
+              style={ Platform.OS === 'android' ? {paddingLeft: PIXEL_X * 10, width: PIXEL_X * 275, color:'black'}:styles.textInput }
+              editable={false}
               onChangeText={(text) => this.setState({homeType: text})}
               placeholder={this.state.homeTypeMessage} placeholderTextColor={this.state.ishomeType ? "#9b9b9b":'red'}
               value={this.state.homeType}/>
@@ -344,7 +346,9 @@ class CounselPage extends Component {
               this._whenTouchModalCheckedValidation();
               this._checkroomTypeValidation();}}
             >
-            <TextInput style={styles.textInput} editable={false}
+            <TextInput
+              style={ Platform.OS === 'android' ? {paddingLeft: PIXEL_X * 10, width: PIXEL_X * 275, color:'black'}:styles.textInput }
+              editable={false}
               onChangeText={(text) => this.setState({roomType: text})}
               placeholder={this.state.roomTypeMessge} placeholderTextColor={this.state.isroomType ? "#9b9b9b":'red'}
               value={this.state.roomType}/>

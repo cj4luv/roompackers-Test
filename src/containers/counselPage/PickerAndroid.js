@@ -296,7 +296,7 @@ let styles = StyleSheet.create({
 	},
 	middle: {
 		height: 40,
-		width: width,
+		width: width * .8,
 		overflow: 'hidden',
 		borderColor: '#aaa',
 		borderTopWidth: 2/ratio,
