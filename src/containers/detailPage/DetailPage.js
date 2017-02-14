@@ -8,7 +8,8 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 
 import * as actions from '../app/actions';
@@ -24,6 +25,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const PIXEL_X = WINDOW_WIDTH/375
 const PIXEL_Y = WINDOW_HEIGHT/667
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 var IMG_PATH = 'http://www.roompackers.com/img/react/';
 
@@ -323,7 +326,7 @@ class DetailPage extends Component {
               <Text  key={i} style={{
                 color: '#4a4a4a',
                 fontWeight: (this.state.currentCtg == data.value) ? 'bold': 'normal',
-                fontSize: PIXEL_X * 15
+                fontSize: PIXEL_X * 15 * FONT_SC
                 }}>{data.name}</Text>
             </View>
           </Button>
@@ -351,7 +354,7 @@ class DetailPage extends Component {
          <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
          <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
            onAnimationEnd={()=>{this._setModalTimer()}} >
-           <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
+           <Text style={{color: '#fff', fontSize:PIXEL_X * 12 * FONT_SC}}>상담신청이 완료되었습니다</Text>
          </Animatable.View>
        </Modal>
      );
@@ -583,7 +586,7 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
     fontWeight:'300',
     color:'#ffffff',
-    fontSize: PIXEL_X * 50
+    fontSize: PIXEL_X * 50 * FONT_SC
   },
   thumnail: {
     height: PIXEL_Y * 70,
@@ -618,12 +621,12 @@ const styles = StyleSheet.create({
     borderRadius:PIXEL_X * 30,
   },
   capablePersonName: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     color: '#1a8793',
     fontWeight: 'bold'
   },
   roomType: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   textView: {
     height:PIXEL_Y * 24,
@@ -638,12 +641,12 @@ const styles = StyleSheet.create({
   },
   hashTag: {
     textAlign: 'left',
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     color: '#1a8793',
   },
   discription: {
     marginTop: PIXEL_X * 10,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   readMoreArea: {
     height: PIXEL_Y * 24,
@@ -651,7 +654,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   readMoreButton: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: '600',
     color: '#1a8793',
   },
@@ -660,7 +663,7 @@ const styles = StyleSheet.create({
   },
   constructionTitle: {
     fontWeight: 'bold',
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   possibleArea: {
     marginTop: PIXEL_X * 10,
@@ -669,11 +672,11 @@ const styles = StyleSheet.create({
   },
   possibleAreaTitle: {
     width: PIXEL_X * 80,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   possibleAreaSubject: {
     marginLeft: PIXEL_X * 15,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   priceTableArea: {
     marginTop: PIXEL_X * 15,
@@ -684,7 +687,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 5
   },
   monetaryUnitText: {
-    fontSize: PIXEL_X * 10,
+    fontSize: PIXEL_X * 10 * FONT_SC,
     textAlign: 'right',
     color: '#4a4a4a'
   },
@@ -699,13 +702,13 @@ const styles = StyleSheet.create({
     height: PIXEL_Y * 29,
   },
   tableCategoryTextCenter:{
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 44,
     textAlign: 'center'
   },
   tableCategoryText:{
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 44,
     textAlign: 'right'
@@ -727,14 +730,14 @@ const styles = StyleSheet.create({
     paddingTop: PIXEL_X * 13
   },
   tableFooterFirstText: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     textAlign: 'center',
     color: '#4a4a4a',
     width: PIXEL_X * 112,
   },
   tableFooterText: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     color: '#4a4a4a',
     textAlign: 'right',
@@ -760,7 +763,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   circleMiddleBtnText: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#1a8793'
   },
@@ -777,7 +780,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 20,
   },
   circleBottomBtnText:{
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#fff'
   },

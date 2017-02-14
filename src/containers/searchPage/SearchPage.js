@@ -9,6 +9,7 @@ import {
   View,
   ActivityIndicator,
   StatusBar,
+  Platform
 } from 'react-native';
 
 import {
@@ -38,9 +39,9 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 //화면 크기에 따른 1픽셀 비율
 const PIXEL_X = WINDOW_WIDTH/375;
-const PIXEL_Y = WINDOW_HEIGHT/667 ;
+const PIXEL_Y = WINDOW_HEIGHT/667;
 
-const FONT_SC = PIXEL_X * 0.9;
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 //카드 크기지정
 var cardWidth = PIXEL_X * 355;
