@@ -182,10 +182,16 @@ export default class PickerAndroid extends Component{
 								{item.label}
 							</Text>;
 
-			middleItems[index] = <Text
-									key={'mid'+index}
+			middleItems[index] = <View
+							key={'mid'+index}
+							style={{justifyContent: 'center', height: 40, width: width, alignItems:'center'}} >
+			 					<Text
+									onPress={()=> {
+										this._moveTo(index);
+									}}
 									style={[styles.middleText, this.state.itemStyle]}>{item.label}
-								</Text>;
+								</Text>
+							</View>;
 
 			downItems[index] = <Text
 									key={'down'+index}
@@ -238,7 +244,9 @@ export default class PickerAndroid extends Component{
 
 				<View style={styles.middle}>
 					<View style={[styles.middleView, middleViewStyle]} ref={(middle) => { this.middle = middle }} >
-						{ items.middleItems }
+						{/* <View style={{justifyContent: 'center', height: 40, borderWidth:1, width: width, alignItems:'center'}} > */}
+								{ items.middleItems }
+						{/* </View> */}
 					</View>
 				</View>
 
@@ -263,7 +271,7 @@ let styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		//this is very important
-		backgroundColor: null
+		backgroundColor: null,
 	},
 	up: {
 		height: 90,
@@ -282,30 +290,33 @@ let styles = StyleSheet.create({
 		opacity: .5,
 		paddingBottom: 0,
 		marginTop: 0,
-		marginBottom: 0
+		marginBottom: 0,
+		width: width,
+		textAlign: 'center'
 	},
 	middle: {
 		height: 40,
 		width: width,
 		overflow: 'hidden',
 		borderColor: '#aaa',
-		borderTopWidth: 1/ratio,
-		borderBottomWidth: 1/ratio,
+		borderTopWidth: 2/ratio,
+		borderBottomWidth: 3/ratio,
 		backgroundColor: 'transparent',
 	},
 	middleView: {
 		height: 40,
 		justifyContent: 'flex-start',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	middleText: {
 		paddingTop: 0,
-		height: 40,
 		color: '#000',
-		fontSize: 28,
+		fontSize: 20,
 		paddingBottom: 0,
 		marginTop: 0,
-		marginBottom: 0
+		marginBottom: 0,
+		width: width,
+		textAlign: 'center'
 	},
 	down: {
 		height: 90,
@@ -321,12 +332,14 @@ let styles = StyleSheet.create({
 	downText: {
 		paddingTop: 0,
 		height: 30,
-		fontSize: 16,
+		fontSize: 20,
 		color: '#000',
 		opacity: .5,
 		paddingBottom: 0,
 		marginTop: 0,
-		marginBottom: 0
+		marginBottom: 0,
+		width: width,
+		textAlign: 'center'
 	}
 
 });
