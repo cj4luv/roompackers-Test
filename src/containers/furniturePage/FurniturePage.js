@@ -5,8 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   Text,
-  AlertIOS,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -17,6 +17,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 class FurniturePage extends Component {
   constructor(props){
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     paddingTop: 20 * PIXEL_Y,
   },
   space: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     letterSpacing: 0.2,
     color: '#4a4a4a',
     width: PIXEL_X * 50,
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
   store: {
     //marginLeft: PIXEL_X * 10,
     letterSpacing: 0.2,
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 90,
     textAlign: 'left',
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
   item: {
     //marginLeft: PIXEL_X * 10,
     letterSpacing: 0.2,
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 130,
     textAlign: 'left'
@@ -153,7 +155,7 @@ const styles = StyleSheet.create({
   price: {
     //marginLeft: PIXEL_X * 7,
     letterSpacing: 0.2,
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 65,
     textAlign: 'right'
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 5
   },
   monetaryUnitText: {
-    fontSize: PIXEL_X * 10,
+    fontSize: PIXEL_X * 10 * FONT_SC,
     textAlign: 'right',
     color: '#4a4a4a'
   },
@@ -190,14 +192,14 @@ const styles = StyleSheet.create({
     paddingTop: PIXEL_X * 13
   },
   footerTextLeft: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     textAlign: 'left',
     color: '#4a4a4a',
     width: PIXEL_X * 103,
   },
   footerTextRight: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     color: '#4a4a4a',
     textAlign: 'right',
@@ -211,7 +213,7 @@ const styles = StyleSheet.create({
   },
   constructionTitle: {
     fontWeight: 'bold',
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   }
 })
 

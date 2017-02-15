@@ -4,8 +4,9 @@ import {
   Image,
   StyleSheet,
   Text,
-  AlertIOS,
-  Dimensions
+  Dimensions,
+  StatusBar,
+  Platform
 } from 'react-native';
 
 import Button from '../../components/buttons/Button';
@@ -15,7 +16,7 @@ import FBSDK, { LoginManager, AccessToken} from 'react-native-fbsdk';
 import * as firebase from 'firebase';
 import Config from './constants';
 
-const firebaseApp = firebase.initializeApp(Config.cfg_firebase_roompackers);
+const firebaseApp = firebase.initializeApp(Config.cfg_firebase_cho);
 const auth = firebaseApp.auth();
 
 import LoginToken from './LoginToken';
@@ -28,6 +29,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 class LoginPage extends Component {
 
@@ -55,7 +58,7 @@ class LoginPage extends Component {
               auth.signInWithCredential(credential).then((result) => {
                 //로그인 성공 시
                 //result{diplayName, uid, email, photoURL}
-                if(loginToken.createUserToken(result.displayName, result.uid)) 
+                if(loginToken.createUserToken(result.displayName, result.uid))
                 Actions.searchPage();
 
               }).catch((error) => {
@@ -119,6 +122,12 @@ class LoginPage extends Component {
     if(loginToken.getUser()){
       Actions.searchPage();
     }
+    if(Platform.OS === 'android') {
+      StatusBar.setHidden(true)
+    } else {
+      StatusBar.setHidden(false)
+    }
+
   }
 
   render(){
@@ -147,7 +156,7 @@ const styles = StyleSheet.create({
     height: PIXEL_Y * 556,
   },
   corporate: {
-    fontSize: PIXEL_X * 18,
+    fontSize: PIXEL_X * 18 * FONT_SC,
     textAlign: 'center',
     margin: PIXEL_X * 4,
     color: '#ffffff',
@@ -155,11 +164,11 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   intro: {
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     color: '#ffffff',
   },
   tourBtn: {
-    fontSize: PIXEL_X * 16,
+    fontSize: PIXEL_X * 16 * FONT_SC,
     color: '#ffffff',
     fontWeight: 'normal'
   },
@@ -188,7 +197,7 @@ const styles = StyleSheet.create({
   },
   fbBtn:{
     color: '#ffffff',
-    fontSize: PIXEL_X * 16,
+    fontSize: PIXEL_X * 16 * FONT_SC,
     fontWeight: 'normal'
   },
   tourView:{

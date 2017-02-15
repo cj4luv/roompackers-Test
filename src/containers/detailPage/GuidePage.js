@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   Dimensions,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -12,6 +13,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 class GuidePage extends Component {
   render() {
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#f8f8fc',
   },
   title: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     marginBottom: PIXEL_X * 10
@@ -50,12 +53,12 @@ const styles = StyleSheet.create({
     marginRight: PIXEL_X * 15,
   },
   subject: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     marginBottom: PIXEL_X * 10
   },
   stepTitle: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: 'normal',
     color: '#1a8793',
     marginBottom: PIXEL_X * 6

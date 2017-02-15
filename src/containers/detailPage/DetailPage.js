@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
-  ActivityIndicator,
-  AlertIOS,
   Dimensions,
   Image,
   View,
@@ -10,7 +8,8 @@ import {
   ScrollView,
   Modal,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 
 import * as actions from '../app/actions';
@@ -27,6 +26,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 const PIXEL_X = WINDOW_WIDTH/375
 const PIXEL_Y = WINDOW_HEIGHT/667
 
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
+
 var IMG_PATH = 'http://www.roompackers.com/img/react/';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
@@ -34,9 +35,14 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import * as Animatable from 'react-native-animatable';
 
 class DetailPage extends Component {
+
+  static propTypes = {
+    isCounselBtn:PropTypes.bool,
+    isOpacity:PropTypes.bool
+  }
+
   //상담 완료시 버튼 비활성  부분
   static defaultProps = {
-
     //버든 기능 온오프 및 버튼 스타일 변형
     isCounselBtn: false,
     isOpacity: true,
@@ -83,10 +89,6 @@ class DetailPage extends Component {
   componentWillMount(){
     Actions.refresh({title: this.props.title});
     this._setDataFromFetching(this.props.data);
-  }
-
-  _setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   }
 
   _setDataFromFetching(data){
@@ -251,15 +253,16 @@ class DetailPage extends Component {
     var list = [];
     if(this.state.currentCtg == 0 ){
       this.state.mainList.map((data, i) =>{
+        console.log(data.url)
         list.push(
-          <Image key={i} style={styles.slide} source={{url: data.url}}/>
+          <Image key={i} style={styles.slide} source={{uri: data.url}} />
         );
       });
     }else{
       this.state.mainList.filter((data)=> {return (data.ctg == this.state.currentCtg)})
       .map((data, i) =>{
         list.push(
-          <Image key={i} style={styles.slide} source={{url: data.url}}/>
+          <Image key={i} style={styles.slide} source={{uri: data.url}} />
         );
       });
     }
@@ -286,7 +289,7 @@ class DetailPage extends Component {
         list.push(
           <View key={i}>
             <Button onPress={()=>{this.setState({indexNum: i, isThumb: true})}}>
-              <Image style={styles.thumnail} source={{url: data.url}}>
+              <Image style={styles.thumnail} source={{uri: data.url}}>
                 {this._renderLayer(i)}
               </Image>
             </Button>
@@ -299,7 +302,7 @@ class DetailPage extends Component {
         list.push(
           <View key={i}>
             <Button onPress={()=>{this.setState({indexNum: i, isThumb: true})}}>
-              <Image style={styles.thumnail} source={{url: data.url}} >
+              <Image style={styles.thumnail} source={{uri: data.url}} >
                 {this._renderLayer(i)}
               </Image>
             </Button>
@@ -323,7 +326,7 @@ class DetailPage extends Component {
               <Text  key={i} style={{
                 color: '#4a4a4a',
                 fontWeight: (this.state.currentCtg == data.value) ? 'bold': 'normal',
-                fontSize: PIXEL_X * 15
+                fontSize: PIXEL_X * 15 * FONT_SC
                 }}>{data.name}</Text>
             </View>
           </Button>
@@ -347,11 +350,11 @@ class DetailPage extends Component {
   //모달 알림 역활 부분 this.state.modalVisible animationType={'fade'}
   _renderModal() {
      return(
-       <Modal transparent={true} visible={this.props.modalVisible} >
+       <Modal transparent={true} visible={this.props.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}} >
          <StatusBar hidden={this.state.modalAnimation ? true:false} animated={true} showHideTransition='fade'/>
          <Animatable.View animation={this.state.modalAnimation ? 'fadeInDown':'fadeOutUp'} style={styles.modalAnimation}
            onAnimationEnd={()=>{this._setModalTimer()}} >
-           <Text style={{color: '#fff', fontSize:PIXEL_X * 12}}>상담신청이 완료되었습니다</Text>
+           <Text style={{color: '#fff', fontSize:PIXEL_X * 12 * FONT_SC}}>상담신청이 완료되었습니다</Text>
          </Animatable.View>
        </Modal>
      );
@@ -380,10 +383,12 @@ class DetailPage extends Component {
           nextButton={<Image source={require('../../../public/img/right.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}
           prevButton={<Image source={require('../../../public/img/left.png')} style={{width:13 * PIXEL_X, height:21 * PIXEL_Y}}></Image>}>
           {this._getSwipeImageList()}
+          {/* <Image style={styles.slide} source={{uri: 'http://www.roompackers.com/img/react/mid_m/1/1/mid_1_1_1_1.jpg'}} /> */}
         </Swiper>
 
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {this._getThumbnailImageList()}
+          {/* <Image style={styles.thumnail} source={{uri: 'http://www.roompackers.com/img/react/mid_m/1/1/mid_1_1_1_1.jpg'}} /> */}
         </ScrollView>
       </View>
     );
@@ -397,7 +402,7 @@ class DetailPage extends Component {
             this._moveToInterioristPage();
           }}>
             <View style={styles.circlePhotoArea}>
-              <Image source={{url: this.state.imgData.pvPath}} style={styles.circlePhoto}></Image>
+              <Image source={{uri: this.state.imgData.pvPath}} style={styles.circlePhoto}></Image>
             </View>
           </Button>
         </View>
@@ -537,6 +542,7 @@ class DetailPage extends Component {
   render() {
     return(
       <ScrollView style={styles.detailScrollView}>
+        {/* <StatusBar hidden={true}></StatusBar> */}
         {this._renderTabs()}
         {this._renderTopSwiper()}
         <View style={styles.mainSubject}>
@@ -580,7 +586,7 @@ const styles = StyleSheet.create({
     backgroundColor:'transparent',
     fontWeight:'300',
     color:'#ffffff',
-    fontSize: PIXEL_X * 50
+    fontSize: PIXEL_X * 50 * FONT_SC
   },
   thumnail: {
     height: PIXEL_Y * 70,
@@ -615,12 +621,12 @@ const styles = StyleSheet.create({
     borderRadius:PIXEL_X * 30,
   },
   capablePersonName: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     color: '#1a8793',
     fontWeight: 'bold'
   },
   roomType: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   textView: {
     height:PIXEL_Y * 24,
@@ -635,12 +641,12 @@ const styles = StyleSheet.create({
   },
   hashTag: {
     textAlign: 'left',
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     color: '#1a8793',
   },
   discription: {
     marginTop: PIXEL_X * 10,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   readMoreArea: {
     height: PIXEL_Y * 24,
@@ -648,7 +654,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   readMoreButton: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: '600',
     color: '#1a8793',
   },
@@ -657,7 +663,7 @@ const styles = StyleSheet.create({
   },
   constructionTitle: {
     fontWeight: 'bold',
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   possibleArea: {
     marginTop: PIXEL_X * 10,
@@ -666,11 +672,11 @@ const styles = StyleSheet.create({
   },
   possibleAreaTitle: {
     width: PIXEL_X * 80,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   possibleAreaSubject: {
     marginLeft: PIXEL_X * 15,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
   },
   priceTableArea: {
     marginTop: PIXEL_X * 15,
@@ -681,7 +687,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 5
   },
   monetaryUnitText: {
-    fontSize: PIXEL_X * 10,
+    fontSize: PIXEL_X * 10 * FONT_SC,
     textAlign: 'right',
     color: '#4a4a4a'
   },
@@ -696,13 +702,13 @@ const styles = StyleSheet.create({
     height: PIXEL_Y * 29,
   },
   tableCategoryTextCenter:{
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 44,
     textAlign: 'center'
   },
   tableCategoryText:{
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     color: '#4a4a4a',
     width: PIXEL_X * 44,
     textAlign: 'right'
@@ -724,14 +730,14 @@ const styles = StyleSheet.create({
     paddingTop: PIXEL_X * 13
   },
   tableFooterFirstText: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     textAlign: 'center',
     color: '#4a4a4a',
     width: PIXEL_X * 112,
   },
   tableFooterText: {
-    fontSize: PIXEL_X * 12,
+    fontSize: PIXEL_X * 12 * FONT_SC,
     fontWeight: '600',
     color: '#4a4a4a',
     textAlign: 'right',
@@ -757,7 +763,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   circleMiddleBtnText: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#1a8793'
   },
@@ -774,7 +780,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 20,
   },
   circleBottomBtnText:{
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#fff'
   },
@@ -799,7 +805,7 @@ const styles = StyleSheet.create({
   }
 });
 
-//module.exports = DetailPage;
+// module.exports = DetailPage;
 
 export default connect(
   (state) => ({

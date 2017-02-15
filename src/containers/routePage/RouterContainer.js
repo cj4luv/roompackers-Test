@@ -16,7 +16,7 @@ import {
 
 import { connect } from 'react-redux';
 
-// import LoginPage from '../loginPage/LoginPage';
+import LoginPage from '../loginPage/LoginPage';
 import SearchPage from '../searchPage/SearchPage';
 
 import DetailPage from '../detailPage/DetailPage';
@@ -27,7 +27,7 @@ import FurniturePage from '../furniturePage/FurniturePage';
 import InterioristPage from '../interioristPage/InterioristPage';
 import CounselPage from '../counselPage/CounselPage';
 
-// import TestPage from '../loginPage/TestPage';
+import TestPage from '../loginPage/TestPage';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -35,14 +35,16 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
 
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
+
 class RouterContainer extends Component {
 
   render() {
     return (
       <Router>
-        {/* <Scene key="TestPage" component={TestPage}  hideNavBar hideTabBar /> */}
-        {/* <Scene key="loginPage" component={LoginPage}  hideNavBar hideTabBar /> */}
-        <Scene key="searchPage" component={SearchPage} hideNavBar hideTabBar type='replace' initial/>
+        <Scene key="TestPage" component={TestPage}  hideNavBar hideTabBar />
+        <Scene key="loginPage" component={LoginPage}  hideNavBar hideTabBar initial/>
+        <Scene key="searchPage" component={SearchPage} hideNavBar hideTabBar type='replace' />
         <Scene key="detailPage" component={DetailPage} title={this.props.pfTitle} titleStyle={styles.title}
           getSceneStyle={getSceneStyle}  navigationBarStyle={styles.navigationBarStyle}
           leftButtonIconStyle={styles.leftButtonIconStyle} hideNavBar={false}
@@ -79,25 +81,21 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
     shadowRadius: null,
   };
   if (computedProps.isActive) {
-    style.marginTop = computedProps.hideNavBar ? 0 :PIXEL_Y * 64;
+    style.marginTop = computedProps.hideNavBar ? 0 :PIXEL_Y * 64 * FONT_SC;
   }
   return style
 }
 
 const styles = StyleSheet.create({
-  searchNavbar: {
-    backgroundColor:'#ffffff',
-    borderBottomWidth: 0,
-    height: PIXEL_Y * 64,
-  },
   navigationBarStyle: {
     backgroundColor:'#ffffff',
-    height: PIXEL_Y * 64,
+    height: PIXEL_Y * 64 * FONT_SC,
   },
   title:{
+    marginTop: Platform.OS === 'android' ? 2:0,
     width: WINDOW_WIDTH,
-    fontSize: PIXEL_X * 17,
-    textAlign: 'center'
+    fontSize: PIXEL_X * 17 * FONT_SC,
+    textAlign: 'center',
   },
   titleWrapperStyle:{
     borderWidth: 1,

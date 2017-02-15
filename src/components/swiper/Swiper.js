@@ -197,7 +197,7 @@ export default class Swiper extends Component {
     if (state.total === initState.total) {
       // retain the index
       // initState.index = state.index
-      setOffsetInState = true
+      setOffsetInState = true;
       initState.index = initState.total > 1 ? Math.min(props.index, initState.total - 1) : 0
     } else {
       // reset the index
@@ -562,7 +562,7 @@ export default class Swiper extends Component {
        )
     }
     return (
-      <ViewPagerAndroid ref='scrollView'
+      <ViewPagerAndroid ref='scrollView' key={this.state.index}
         {...this.props}
         initialPage={this.props.loop ? this.state.index + 1 : this.state.index}
         onPageSelected={this.onScrollEnd}

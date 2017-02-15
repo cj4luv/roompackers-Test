@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
   View,
   ActivityIndicator,
+  StatusBar,
+  Platform
 } from 'react-native';
 
 import {
@@ -29,7 +31,7 @@ import * as actions from '../app/actions';
 //import { connect } from 'react-redux';
 
 //PickerIOS를 담은 모달
-// import PickerModal from './PickerModal';
+import PickerModal from './PickerModal';
 
 //화면 크기 얻기
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -37,9 +39,9 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 //화면 크기에 따른 1픽셀 비율
 const PIXEL_X = WINDOW_WIDTH/375;
-const PIXEL_Y = WINDOW_HEIGHT/667 ;
+const PIXEL_Y = WINDOW_HEIGHT/667;
 
-const FONT_SC = PIXEL_X * 0.9;
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 //카드 크기지정
 var cardWidth = PIXEL_X * 355;
@@ -63,24 +65,24 @@ class SearchPage extends Component {
       priceRangeBtn: '가격범위',
     };
   }
-  // //modal visiablity && button text set
-  // _setRoomModalVisible(visible) {
-  //   this.setState({roomModalVisible: visible});
-  // }_setPriceModalVisible(visible) {
-  //   this.setState({priceModalVisible: visible});
-  // }
-  //  // selected category
-  // _setRoomTypeValue(value){
-  //   this.setState({
-  //     roomTypeBtn: this.roomType[value],
-  //     roomTypeNum: value
-  //   });
-  // }_setPriceRangeValue(value){
-  //   this.setState({
-  //     priceRangeBtn: this.priceRange[value],
-  //     priceTypeNum: value
-  //   });
-  // }
+  //modal visiablity && button text set
+  _setRoomModalVisible(visible) {
+    this.setState({roomModalVisible: visible});
+  }_setPriceModalVisible(visible) {
+    this.setState({priceModalVisible: visible});
+  }
+   // selected category
+  _setRoomTypeValue(value){
+    this.setState({
+      roomTypeBtn: this.roomType[value],
+      roomTypeNum: value
+    });
+  }_setPriceRangeValue(value){
+    this.setState({
+      priceRangeBtn: this.priceRange[value],
+      priceTypeNum: value
+    });
+  }
 
   componentWillMount(){
     //rest로 상품 db리스트 불러오기
@@ -152,11 +154,17 @@ class SearchPage extends Component {
   //로딩화면 추후 교체
   render() {
     if(this.state.dataLoaded){
-      return this._renderLoaded();
+      return (
+        <View>
+          {/* <StatusBar hidden={true}></StatusBar> */}
+          {this._renderLoaded()}
+        </View>
+      )
     }else{
       return(
         <View>
-        {this._renderHeader()}
+          {/* <StatusBar hidden={true}></StatusBar> */}
+          {this._renderHeader()}
         </View>
       );
     }
@@ -167,7 +175,7 @@ class SearchPage extends Component {
       <View>
         {this._renderHeader()}
         {this._renderScrollView()}
-        {/* {this._renderPickerModal()} */}
+        {this._renderPickerModal()}
       </View>
     );
   }
@@ -179,12 +187,12 @@ class SearchPage extends Component {
         <Text style={styles.headerText}> Roompackers </Text>
         <View style={styles.headerButton}>
           <TouchableHighlight underlayColor={'#f8f8fc'} style={styles.button} onPress={() => {
-            console.log('공간');
+            this._setRoomModalVisible(true);
           }}>
             <Text style={styles.buttonText}>{this.state.roomTypeBtn}</Text>
           </TouchableHighlight>
           <TouchableHighlight underlayColor={'#f8f8fc'} style={styles.button} onPress={() => {
-            console.log('가격');
+            this._setPriceModalVisible(true);
           }}>
             <Text style={styles.buttonText}>{this.state.priceRangeBtn}</Text>
           </TouchableHighlight>
@@ -252,25 +260,25 @@ class SearchPage extends Component {
 
     );
   }
-  // //Modalrender
-  // _renderPickerModal(){
-  //   return(
-  //     <View>
-  //       <PickerModal
-  //         item={this.roomType}
-  //         modalVisible={this.state.roomModalVisible}
-  //         setValue={this._setRoomTypeValue.bind(this)}
-  //         setModalVisible={this._setRoomModalVisible.bind(this)}
-  //       />
-  //       <PickerModal
-  //         item={this.priceRange}
-  //         modalVisible={this.state.priceModalVisible}
-  //         setValue={this._setPriceRangeValue.bind(this)}
-  //         setModalVisible={this._setPriceModalVisible.bind(this)}
-  //       />
-  //     </View>
-  //   );
-  // }
+  //Modalrender
+  _renderPickerModal(){
+    return(
+      <View>
+        <PickerModal
+          item={this.roomType}
+          modalVisible={this.state.roomModalVisible}
+          setValue={this._setRoomTypeValue.bind(this)}
+          setModalVisible={this._setRoomModalVisible.bind(this)}
+        />
+        <PickerModal
+          item={this.priceRange}
+          modalVisible={this.state.priceModalVisible}
+          setValue={this._setPriceRangeValue.bind(this)}
+          setModalVisible={this._setPriceModalVisible.bind(this)}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

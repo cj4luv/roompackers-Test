@@ -6,7 +6,8 @@ import {
   Text,
   Dimensions,
   Image,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -16,6 +17,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 class InterioristPage extends Component {
   componentWillMount(){
@@ -42,7 +45,8 @@ class InterioristPage extends Component {
           <Text style={styles.subject}>{this.props.data.desc_2}</Text>
           <Text style={styles.title}>자신이 느끼는 셀프인테리어의 매력은 무엇인가요?</Text>
           <Text style={styles.subject}>{this.props.data.desc_4}</Text>
-        </View>     
+        </View>
+        {/* <Text onPress={()=>{Actions.TestPage()}}>ddd</Text>      */}
       </ScrollView>
     );
   }
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: PIXEL_X * 14.8
   },
   title: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     marginBottom: PIXEL_X * 10
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
     marginRight: PIXEL_X * 15,
   },
   subject: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     marginBottom: PIXEL_X * 15
   },
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   portpolio: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: 'normal',
     color: '#4a4a4a',
   },
   hashTag: {
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: 'normal',
     color: '#1a8793',
   },

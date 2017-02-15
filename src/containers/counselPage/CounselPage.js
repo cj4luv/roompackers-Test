@@ -5,11 +5,10 @@ import {
   Text,
   Dimensions,
   TextInput,
-  AlertIOS,
-  PickerIOS,
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
+  Platform
 } from 'react-native';
 
 import Util from '../../components/functions/Util';
@@ -35,6 +34,8 @@ import { Actions,  ActionConst } from 'react-native-router-flux';
 
 import * as actions from '../app/actions';
 import { connect } from 'react-redux';
+
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
 
 class CounselPage extends Component {
 
@@ -273,6 +274,7 @@ class CounselPage extends Component {
         <View style={styles.custemerInfo}>
           <Text style={styles.category}>신청자</Text>
           <TextInput style={styles.textInput}
+            underlineColorAndroid='transparent'
             onBlur={() => {
               if(this.state.checked === true ) {
                 //상담신청 완료 버튼 ON-OFF
@@ -296,8 +298,11 @@ class CounselPage extends Component {
               }
               //TextInput 객체에서 done버튼을 종료하지 않고 바로 피커 실행시 TextInput Value값이 유효한지 검사
               this._whenTouchModalCheckedValidation();
-              this._checkhomeTypeValidation();}} >
-            <TextInput style={styles.textInput} editable={false}
+              this._checkhomeTypeValidation();}}
+            >
+            <TextInput
+              style={ Platform.OS === 'android' ? {paddingLeft: PIXEL_X * 10, width: PIXEL_X * 275, color:'black'}:styles.textInput }
+              editable={false}
               onChangeText={(text) => this.setState({homeType: text})}
               placeholder={this.state.homeTypeMessage} placeholderTextColor={this.state.ishomeType ? "#9b9b9b":'red'}
               value={this.state.homeType}/>
@@ -341,8 +346,11 @@ class CounselPage extends Component {
                 this._changeCounselBtnColor();
               }
               this._whenTouchModalCheckedValidation();
-              this._checkroomTypeValidation();}} >
-            <TextInput style={styles.textInput} editable={false}
+              this._checkroomTypeValidation();}}
+            >
+            <TextInput
+              style={ Platform.OS === 'android' ? {paddingLeft: PIXEL_X * 10, width: PIXEL_X * 275, color:'black'}:styles.textInput }
+              editable={false}
               onChangeText={(text) => this.setState({roomType: text})}
               placeholder={this.state.roomTypeMessge} placeholderTextColor={this.state.isroomType ? "#9b9b9b":'red'}
               value={this.state.roomType}/>
@@ -465,7 +473,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#f8f8fc',
   },
   title: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     width: PIXEL_X * 70
@@ -482,14 +490,14 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start'
   },
   category:{
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'normal',
     width: PIXEL_X * 70
   },
   subject: {
     width: PIXEL_X * 260,
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'normal',
   },
@@ -500,7 +508,7 @@ const styles = StyleSheet.create({
 
   },
   secondTitle: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     width: PIXEL_X * 70,
@@ -516,7 +524,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     backgroundColor:'#efeff4',
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     paddingLeft: PIXEL_X * 10,
     fontWeight: 'normal'
   },
@@ -529,16 +537,16 @@ const styles = StyleSheet.create({
   footerText: {
     width:PIXEL_X * 318,
     marginLeft: PIXEL_X * 10,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: 'normal',
   },
   circleBottomBtnText:{
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#fff'
   },
   pickertext: {
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     color:'#9b9b9b',
     fontWeight: 'normal',
   },
