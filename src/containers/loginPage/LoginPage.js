@@ -30,6 +30,8 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 const PIXEL_X = WINDOW_WIDTH/375;
 const PIXEL_Y = WINDOW_HEIGHT/667;
 
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
+
 class LoginPage extends Component {
 
   constructor(props) {
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     height: PIXEL_Y * 556,
   },
   corporate: {
-    fontSize: PIXEL_X * 18,
+    fontSize: PIXEL_X * 18 * FONT_SC,
     textAlign: 'center',
     margin: PIXEL_X * 4,
     color: '#ffffff',
@@ -162,11 +164,11 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   intro: {
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     color: '#ffffff',
   },
   tourBtn: {
-    fontSize: PIXEL_X * 16,
+    fontSize: PIXEL_X * 16 * FONT_SC,
     color: '#ffffff',
     fontWeight: 'normal'
   },
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
   },
   fbBtn:{
     color: '#ffffff',
-    fontSize: PIXEL_X * 16,
+    fontSize: PIXEL_X * 16 * FONT_SC,
     fontWeight: 'normal'
   },
   tourView:{

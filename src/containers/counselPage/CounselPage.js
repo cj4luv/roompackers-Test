@@ -35,6 +35,8 @@ import { Actions,  ActionConst } from 'react-native-router-flux';
 import * as actions from '../app/actions';
 import { connect } from 'react-redux';
 
+const FONT_SC = Platform.OS === 'android' ? PIXEL_X * 0.9:1;
+
 class CounselPage extends Component {
 
   constructor(props){
@@ -471,7 +473,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#f8f8fc',
   },
   title: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     width: PIXEL_X * 70
@@ -488,14 +490,14 @@ const styles = StyleSheet.create({
     justifyContent:'flex-start'
   },
   category:{
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'normal',
     width: PIXEL_X * 70
   },
   subject: {
     width: PIXEL_X * 260,
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'normal',
   },
@@ -506,7 +508,7 @@ const styles = StyleSheet.create({
 
   },
   secondTitle: {
-    fontSize:PIXEL_X * 15,
+    fontSize:PIXEL_X * 15 * FONT_SC,
     color: '#4a4a4a',
     fontWeight: 'bold',
     width: PIXEL_X * 70,
@@ -522,7 +524,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     backgroundColor:'#efeff4',
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     paddingLeft: PIXEL_X * 10,
     fontWeight: 'normal'
   },
@@ -535,16 +537,16 @@ const styles = StyleSheet.create({
   footerText: {
     width:PIXEL_X * 318,
     marginLeft: PIXEL_X * 10,
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     fontWeight: 'normal',
   },
   circleBottomBtnText:{
-    fontSize: PIXEL_X * 15,
+    fontSize: PIXEL_X * 15 * FONT_SC,
     textAlign: 'center',
     color: '#fff'
   },
   pickertext: {
-    fontSize: PIXEL_X * 14,
+    fontSize: PIXEL_X * 14 * FONT_SC,
     color:'#9b9b9b',
     fontWeight: 'normal',
   },
